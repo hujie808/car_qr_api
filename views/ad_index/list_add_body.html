@@ -1,0 +1,44 @@
+<form class="layui-form" method="post" lay-filter="example">
+    <div class="layui-form-item">
+        <label class="layui-form-label"></label>
+        <div class="layui-input-block">
+        </div>
+    </div>
+    <div class="layui-form-item layui-col-xs4 layui-col-sm7 layui-col-md8">
+        <label class="layui-form-label ">跳转链接</label>
+        <div class="layui-input-block ">
+            <input type="text" name="Url" required lay-verify="required" placeholder="https://www.baidu.com"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" >
+        <label class="layui-form-label"> </label>
+        <img id="imagess" src="" style="height: 5rem;width: auto">
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">广告图片</label>
+        <button type="button" class="layui-btn" id="files">
+            <i class="layui-icon">&#xe67c;</i>上传图片
+        </button>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">是否默认</label>
+            <div class="layui-input-block">
+                <input type="radio" name="DefualtFlag" value="1" title="默认显示">
+                <input type="radio" name="DefualtFlag" value="0" title="非默认" checked>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">文本域</label>
+            <div class="layui-input-block">
+                <textarea id="edit" name="Content" placeholder="请输入内容" class="layui-textarea"
+                          style="display: none;"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button type="button" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+</form>

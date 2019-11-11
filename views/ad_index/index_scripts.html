@@ -1,0 +1,149 @@
+<script type="text/html" id="barTable">
+    <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+<script type="text/html" id="img_tmpl">
+    <img src="" style="width: 100px;height: 100px;"/>
+</script>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#table',
+            url: '{{ urlfor "Index.GetIndex"}}',
+            cellMinWidth: 80,//全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            method: "post",
+            where: {Id: "1", user_id: "1"},
+            cols: [
+                [{
+                    field: 'ad_all_count',
+                    minWidth: 80,
+                    title: '广告总数'
+                }, {
+                    field: 'ad_count',
+                    minWidth: 80,
+                    title: '可设置最大数量'
+                }, {
+                    field: 'default_ad_list',
+                    minWidth: 80,
+                    title: '默认广告id'
+                }, {
+                    field: 'expire_date',
+                    minWidth: 80,
+                    title: '账号过期时间'
+                }, {
+                    field: 'qr_inuse_count',
+                    title: '正在使用二维码',
+                    minWidth: 100
+                }
+                ]
+            ],
+            response: {
+                // statusCode: 200
+            },
+            parseData: function (res) {
+                console.log(res.data);
+                return {
+                    "data": [res.data],
+                    "code": res.code
+                }
+            }
+        });
+        table.render({
+            elem: '#table_list',
+            url: '{{ urlfor "Index.GetIndex"}}',//全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            method: "post",
+            where: {Id: "1", user_id: "1"},
+            cols: [
+                [{
+                    field: 'Id',
+                    minWidth: 15,
+                    title: 'Id',
+                    fixed: 'left',
+
+                }, {
+                    field: 'Content',
+                    minWidth: 80,
+                    title: '广告内容'
+                }, {
+                    field: 'DefualtFlag',
+                    minWidth: 15,
+                    title: '默认广告'
+                }, {
+                    field: 'Pic',
+                    title: '广告图片',
+                    minWidth: 200,
+                    // templet: "#img_tmpl"
+                } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                    , {
+                    field: "Url",
+                    title: '跳转路径',
+                    minWidth: 100
+                }, {
+                    field: 'UpdateDate',
+                    title: '更新时间',
+                    minWidth: 100
+                }, {fixed: 'right', width: 165, align: 'center', toolbar: '#barTable'}
+
+                ]
+            ],
+            response: {
+                // statusCode: 200
+            },
+            parseData: function (res) {
+                console.log(res.data);
+                for (let i = 0; i < res.data.ad_all.length; i++) {
+                    // res.data.ad_all[i].Pic = res.data.ad_all[i].Pic
+                    res.data.ad_all[i].Pic = '<div><img style="width: 100px;height: 100px;" src=\"' + res.data.ad_all[i].Pic + '\"></div>';
+
+                    if (res.data.ad_all[i].DefualtFlag == "1") {
+                        res.data.ad_all[i].DefualtFlag = "🔴️"
+                    } else {
+                        res.data.ad_all[i].DefualtFlag = "⭕"
+                    }
+                }
+                return {
+
+                    "data": res.data.ad_all,
+                    "code": res.code
+                }
+            }
+        });
+        //监听头工具栏事件
+        table.on('tool(ad)', function (obj) { //注：tool 是工具条事件名，test 是 table 原始容器的属性 lay-filter="对应的值"
+            var data = obj.data //获得当前行数据
+                , layEvent = obj.event; //获得 lay-event 对应的值
+            if (layEvent === 'detail') {
+                layer.msg('查看操作');
+            } else if (layEvent === 'del') {
+                layer.confirm('真的删除行么', function (index) {
+                    obj.del(); //删除对应行（tr）的DOM结构
+                    layer.close(index);
+                    //向服务端发送删除指令
+                    $.ajax({
+                        type: 'delete',
+                        url: '{{ urlfor "Index.GetListAdd"}}' + '/' + data.Id, // ajax请求路径
+                        data: {},
+                        success: function (data) {
+                            if (data == 'ok') {
+                                layer.msg('删除成功');
+                            } else if (data == 'error') {
+                                layer.msg('删除失败');
+                            }
+                        },
+                        error: function (rep) {
+                            layer.msg("失败:" + rep.responseJSON.msg);
+                        }
+                    });
+
+                });
+            } else if (layEvent === 'edit') {
+                console.log('{{urlfor "Index.GetListAdd"}}')
+                window.location.href = '{{urlfor "Index.GetListAdd"}}' + '/' + data.Id
+                layer.msg('编辑操作1');
+            }
+        });
+
+    });
+
+</script>

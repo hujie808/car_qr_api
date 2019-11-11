@@ -1,0 +1,114 @@
+package controllers
+
+import (
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+	"web_bee/car_qr_api/models"
+	"strconv"
+	"web_bee/car_qr_api/utils/bee_redis"
+	"encoding/json"
+	"time"
+)
+ type QrController struct {
+ 	beego.Controller
+	o orm.Ormer
+ }
+
+ type AdListRes struct {
+ 	Url string
+ 	Pic string
+ 	Content string
+ }
+func (c *QrController) URLMapping() {
+	c.Mapping("Index", c.Index)
+	c.Mapping("Reg", c.Reg)
+}
+
+func (this * QrController)Init(){
+	this.o = orm.NewOrm()
+}
+/*
+	method get
+    use for user qrcode login
+    Params
+    uuid: 		 qr's uuid for unique
+    ad:			 the ad contents id
+    ad_customer: the ad customer id
+	Edit by Hyw 2019.10.22
+*/
+// @router /index/:uuid/:ad/:ad_customer [get]
+func (this *QrController) Index()  {
+	uuid:=this.Ctx.Input.Param(":uuid")
+	ad:=this.Ctx.Input.Param(":ad")
+	ad_id,_ := strconv.Atoi(ad)
+	ad_customer:=this.Ctx.Input.Param(":ad_customer")
+	ad_customer_id,_ := strconv.Atoi(ad_customer)
+
+	//判断是否有该uuid
+	qr := models.QrInfo{Uuid:uuid}
+	err:= this.o.Read(&qr,"Uuid")
+	if err == orm.ErrNoRows{
+		this.Abort("401")
+	}
+	var adUrl string
+	var adPic string
+	var adContent string
+	//判断该二维码是否已设置了广告id
+	if ad_id>0{
+		adContent := models.AdList{Id:ad_id}
+		err:= this.o.Read(&adContent)
+		if err == orm.ErrNoRows{
+			//没有广告内容  选择系统设置的广告信息进行展示
+			this.GetAd()
+		}
+	}else {
+		//判断该广告是否到期，如果到期选择系统广告进行展示
+
+	}
+
+	//判断该二维码是否绑定了广告客户
+	if ad_customer_id >0{
+		adCustomer := models.AdUsers{Id:ad_customer_id}
+		err:=this.o.Read(&adCustomer)
+		if err == orm.ErrNoRows{
+			//不存在该广告用户
+		}else{
+
+		}
+	}
+	return
+}
+
+// @router /reg [post]
+func (this *QrController) Reg(){
+
+}
+
+
+func (this *QrController) GetAd() string{
+	//判断 默认广告是否已经写入redis
+	if bee_redis.Cache.IsExist("defaultAd"){
+		return string(bee_redis.Cache.Get("defaultAd").([]byte))
+	}else{
+		var adRes AdListRes
+		qb, _ := orm.NewQueryBuilder("mysql")
+
+		// 构建查询对象
+		qb.Select("url",
+			"pic","content").
+			From("ad_list").
+			Where("default_flag > ?").
+			OrderBy("id").Desc().
+			Limit(1).Offset(0)
+
+		// 导出 SQL 语句
+		sql := qb.String()
+
+		// 执行 SQL 语句
+
+		this.o.Raw(sql, 0).QueryRows(&adRes)
+		result,_ := json.Marshal(adRes)
+		bee_redis.Cache.Put("defaultAd",adRes,60*60*24*time.Second)
+		return string(result)
+	}
+}

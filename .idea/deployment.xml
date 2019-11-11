@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="cttec_car_qr_api">
+    <serverData>
+      <paths name="cttec_car_qr_api">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/car_qr_api" local="$PROJECT_DIR$" web="/" />
+          </mappings>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

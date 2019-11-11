@@ -1,0 +1,89 @@
+<script>
+    layui.use(['layer', 'form', 'layedit', 'upload'], function () {
+        var upload = layui.upload;
+        var imageUrl;
+        //执行实例
+        var uploadInst = upload.render({
+            elem: '#files' //绑定元素
+            , url: '{{ urlfor "Index.ImgEdit"}}' //上传接口
+            , done: function (res) {
+                imageUrl = res.data.src
+                imageUrl = res.data.src
+                layer.msg('上传成功');
+                var src = $("#imagess").attr('src');
+                $("#imagess").attr('src',res.data.src);
+            }
+            , error: function (res) {
+                layer.error(res)
+            }
+            , accept: 'images'
+            , size: 5000
+        });
+
+        var layedit = layui.layedit;
+        layedit.set({
+            uploadImage: {
+                url: '{{ urlfor "Index.ImgEdit"}}',  //接口url
+                type: 'post', //默认post
+            }
+        });
+        var edit = layedit.build('edit', {
+            height: 200, //设置编辑器高度
+            width: 200,
+        });
+        layedit.setContent(edit, {{.ad_list.Content}});
+
+
+        var form = layui.form;
+        //监听提交
+
+        form.verify({
+            fileVerify: function (value) {
+            }
+            , pass: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+            , content: function (value) {
+                layedit.sync(editIndex);
+            }
+        });
+
+
+//表单赋值
+        $(function () {
+            form.val('example', {
+                "Url": {{.ad_list.Url}} // "name": "value"
+                , "DefualtFlag": {{.ad_list.DefualtFlag}}
+                ,"Content":{{.ad_list.Content}}
+            });
+            imageUrl={{.ad_list.Pic}}
+            $("#imagess").attr('src',{{.ad_list.Pic}});
+            // edit={{.ad_list.Content}}
+        })
+        form.on('submit(demo1)', function (data) {
+            data.field["Id"] = {{.ad_list.Id}}
+            data.field["Content"] = layedit.getContent(edit)
+            data.field["Pic"] = imageUrl
+            var articleFrom = data.field;
+            if (imageUrl == null) {
+                layer.msg('广告图片必须上传')
+                return;
+            }
+            $.ajax({
+                url: '{{ urlfor "Index.GetListAdd"}}'+"/"+{{.ad_list.Id}},
+                data: data.field,
+                type: "PUT",
+                error:function (rep) {
+                    layer.msg("更新失败:"+rep.responseJSON.msg);
+                },
+                success: function (rep) {
+                    layer.msg("已更新");
+                    window.location.href={{urlfor "Index.GetIndex"}}
+                },
+            })
+            return false;
+        });
+    })
+    ;
+</script>

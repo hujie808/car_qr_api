@@ -1,0 +1,906 @@
+swagger: "2.0"
+info:
+  title: beego Test API
+  description: beego has a very cool tools to autogenerate documents for your API
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: astaxie@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /v1
+paths:
+  /ad_list/:
+    get:
+      tags:
+      - ad_list
+      description: get AdList
+      operationId: AdListController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdList'
+        "403":
+          description: ""
+    post:
+      tags:
+      - ad_list
+      description: create AdList
+      operationId: AdListController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for AdList content
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdList'
+      responses:
+        "201":
+          description: '{int} models.AdList'
+        "403":
+          description: body is empty
+  /ad_list/{id}:
+    get:
+      tags:
+      - ad_list
+      description: get AdList by id
+      operationId: AdListController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdList'
+        "403":
+          description: :id is empty
+    put:
+      tags:
+      - ad_list
+      description: update the AdList
+      operationId: AdListController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for AdList content
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdList'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdList'
+        "403":
+          description: :id is not int
+    delete:
+      tags:
+      - ad_list
+      description: delete the AdList
+      operationId: AdListController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: id is empty
+  /ad_log/:
+    get:
+      tags:
+      - ad_log
+      description: get AdLog
+      operationId: AdLogController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdLog'
+        "403":
+          description: ""
+    post:
+      tags:
+      - ad_log
+      description: create AdLog
+      operationId: AdLogController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for AdLog content
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdLog'
+      responses:
+        "201":
+          description: '{int} models.AdLog'
+        "403":
+          description: body is empty
+  /ad_log/{id}:
+    get:
+      tags:
+      - ad_log
+      description: get AdLog by id
+      operationId: AdLogController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdLog'
+        "403":
+          description: :id is empty
+    put:
+      tags:
+      - ad_log
+      description: update the AdLog
+      operationId: AdLogController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for AdLog content
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdLog'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdLog'
+        "403":
+          description: :id is not int
+    delete:
+      tags:
+      - ad_log
+      description: delete the AdLog
+      operationId: AdLogController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: id is empty
+  /ad_users/:
+    get:
+      tags:
+      - ad_users
+      description: get AdUsers
+      operationId: AdUsersController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdUsers'
+        "403":
+          description: ""
+    post:
+      tags:
+      - ad_users
+      description: create AdUsers
+      operationId: AdUsersController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for AdUsers content
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdUsers'
+      responses:
+        "201":
+          description: '{int} models.AdUsers'
+        "403":
+          description: body is empty
+  /ad_users/{id}:
+    get:
+      tags:
+      - ad_users
+      description: get AdUsers by id
+      operationId: AdUsersController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdUsers'
+        "403":
+          description: :id is empty
+    put:
+      tags:
+      - ad_users
+      description: update the AdUsers
+      operationId: AdUsersController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for AdUsers content
+        required: true
+        schema:
+          $ref: '#/definitions/models.AdUsers'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.AdUsers'
+        "403":
+          description: :id is not int
+    delete:
+      tags:
+      - ad_users
+      description: delete the AdUsers
+      operationId: AdUsersController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: id is empty
+  /call_log/:
+    get:
+      tags:
+      - call_log
+      description: get CallLog
+      operationId: CallLogController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.CallLog'
+        "403":
+          description: ""
+    post:
+      tags:
+      - call_log
+      description: create CallLog
+      operationId: CallLogController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for CallLog content
+        required: true
+        schema:
+          $ref: '#/definitions/models.CallLog'
+      responses:
+        "201":
+          description: '{int} models.CallLog'
+        "403":
+          description: body is empty
+  /call_log/{id}:
+    get:
+      tags:
+      - call_log
+      description: get CallLog by id
+      operationId: CallLogController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.CallLog'
+        "403":
+          description: :id is empty
+    put:
+      tags:
+      - call_log
+      description: update the CallLog
+      operationId: CallLogController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for CallLog content
+        required: true
+        schema:
+          $ref: '#/definitions/models.CallLog'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.CallLog'
+        "403":
+          description: :id is not int
+    delete:
+      tags:
+      - call_log
+      description: delete the CallLog
+      operationId: CallLogController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: id is empty
+  /qr_info/:
+    get:
+      tags:
+      - qr_info
+      description: get QrInfo
+      operationId: QrInfoController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.QrInfo'
+        "403":
+          description: ""
+    post:
+      tags:
+      - qr_info
+      description: create QrInfo
+      operationId: QrInfoController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for QrInfo content
+        required: true
+        schema:
+          $ref: '#/definitions/models.QrInfo'
+      responses:
+        "201":
+          description: '{int} models.QrInfo'
+        "403":
+          description: body is empty
+  /qr_info/{id}:
+    get:
+      tags:
+      - qr_info
+      description: get QrInfo by id
+      operationId: QrInfoController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.QrInfo'
+        "403":
+          description: :id is empty
+    put:
+      tags:
+      - qr_info
+      description: update the QrInfo
+      operationId: QrInfoController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for QrInfo content
+        required: true
+        schema:
+          $ref: '#/definitions/models.QrInfo'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.QrInfo'
+        "403":
+          description: :id is not int
+    delete:
+      tags:
+      - qr_info
+      description: delete the QrInfo
+      operationId: QrInfoController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: id is empty
+  /qr_info/add/{id}:
+    put:
+      tags:
+      - qr_info
+      description: delete the QrInfo
+      operationId: QrInfoController.GetQr
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "201":
+          description: '{string} delete success!'
+        "403":
+          description: id is empty
+  /user_info/:
+    get:
+      tags:
+      - user_info
+      description: get UserInfo
+      operationId: UserInfoController.Get All
+      parameters:
+      - in: query
+        name: query
+        description: Filter. e.g. col1:v1,col2:v2 ...
+        type: string
+      - in: query
+        name: fields
+        description: Fields returned. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: sortby
+        description: Sorted-by fields. e.g. col1,col2 ...
+        type: string
+      - in: query
+        name: order
+        description: Order corresponding to each sortby field, if single value, apply
+          to all sortby fields. e.g. desc,asc ...
+        type: string
+      - in: query
+        name: limit
+        description: Limit the size of result set. Must be an integer
+        type: string
+      - in: query
+        name: offset
+        description: Start position of result set. Must be an integer
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.UserInfo'
+        "403":
+          description: ""
+    post:
+      tags:
+      - user_info
+      description: create UserInfo
+      operationId: UserInfoController.Post
+      parameters:
+      - in: body
+        name: body
+        description: body for UserInfo content
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserInfo'
+      responses:
+        "201":
+          description: '{int} models.UserInfo'
+        "403":
+          description: body is empty
+  /user_info/{id}:
+    get:
+      tags:
+      - user_info
+      description: get UserInfo by id
+      operationId: UserInfoController.Get One
+      parameters:
+      - in: path
+        name: id
+        description: The key for staticblock
+        required: true
+        type: string
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.UserInfo'
+        "403":
+          description: :id is empty
+    put:
+      tags:
+      - user_info
+      description: update the UserInfo
+      operationId: UserInfoController.Put
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to update
+        required: true
+        type: string
+      - in: body
+        name: body
+        description: body for UserInfo content
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserInfo'
+      responses:
+        "200":
+          description: ""
+          schema:
+            $ref: '#/definitions/models.UserInfo'
+        "403":
+          description: :id is not int
+    delete:
+      tags:
+      - user_info
+      description: delete the UserInfo
+      operationId: UserInfoController.Delete
+      parameters:
+      - in: path
+        name: id
+        description: The id you want to delete
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{string} delete success!'
+        "403":
+          description: id is empty
+definitions:
+  models.AdList:
+    title: AdList
+    type: object
+    properties:
+      AdUserId:
+        $ref: '#/definitions/models.AdUsers'
+        description: 广告绑定用户id
+      AddDate:
+        description: 添加时间
+        type: string
+        format: datetime
+      Content:
+        description: 广告内容
+        type: string
+      Id:
+        description: 广告内容id
+        type: integer
+        format: int64
+      Pic:
+        description: 图片广告的路片路径
+        type: string
+      Template:
+        description: '广告模板，为后来预留的数据接口,Tp1、tp2 '
+        type: string
+      UpdateDate:
+        description: 修改时间
+        type: string
+        format: datetime
+      Url:
+        description: 广告图片的url跳转链接
+        type: string
+  models.AdLog:
+    title: AdLog
+    type: object
+    properties:
+      AdId:
+        $ref: '#/definitions/models.QrInfo'
+        description: 展示的广告id
+      ClickFlag:
+        description: 是否点击图片尝试跳转 0，没有 1，有
+        type: integer
+        format: int64
+      Id:
+        description: id
+        type: integer
+        format: int64
+      QrId:
+        $ref: '#/definitions/models.QrInfo'
+        description: 扫描的汽车二维码_uuid
+      ShowDatetime:
+        description: 展示时间
+        type: string
+        format: datetime
+  models.AdUsers:
+    title: AdUsers
+    type: object
+    properties:
+      AdCount:
+        description: 设置广告数量
+        type: integer
+        format: int64
+      AddDate:
+        description: 账号添加时间
+        type: string
+        format: datetime
+      Adpass:
+        description: 客户密码
+        type: string
+      ExpireDate:
+        description: 账户过期时间
+        type: string
+        format: datetime
+      Id:
+        description: 广告客户id
+        type: integer
+        format: int64
+      LastLogin:
+        description: 最后访问时间
+        type: string
+        format: datetime
+      User:
+        description: 广告客户账号
+        type: string
+      Username:
+        description: 广告客户显示名称
+        type: string
+  models.CallLog:
+    title: CallLog
+    type: object
+    properties:
+      CallDate:
+        description: 调起呼叫的时间日期
+        type: string
+        format: datetime
+      CallFrom:
+        description: 发起呼叫的手机号码
+        type: string
+      CallStatus:
+        description: 调起是否成功，1成功 0失败
+        type: integer
+        format: int64
+      Id:
+        description: id
+        type: integer
+        format: int64
+      QrId:
+        $ref: '#/definitions/models.QrInfo'
+        description: 扫描汽车二维码
+  models.QrInfo:
+    title: QrInfo
+    type: object
+    properties:
+      AdId:
+        $ref: '#/definitions/models.AdList'
+        description: '关联的广告id '
+      AdUsersId:
+        $ref: '#/definitions/models.AdUsers'
+        description: 所属广告商
+      Id:
+        description: id
+        type: integer
+        format: int64
+      Inuse:
+        description: 0,1当前是否使用
+        type: integer
+        format: int64
+      StartDate:
+        description: 启用时间
+        type: string
+        format: datetime
+      UserId:
+        $ref: '#/definitions/models.UserInfo'
+        description: '关联用户表的用户id '
+      Uuid:
+        description: uuid
+        type: string
+      VisitDate:
+        description: '最新访问时间 '
+        type: string
+        format: datetime
+      VisitTimes:
+        description: 访问次数
+        type: integer
+        format: int64
+  models.UserInfo:
+    title: UserInfo
+    type: object
+    properties:
+      CarNum:
+        description: 车牌号
+        type: string
+      Id:
+        description: 用户id
+        type: integer
+        format: int64
+      Telphone:
+        description: 手机号
+        type: string
+      UpdateDate:
+        description: 用户修改信息时间
+        type: string
+        format: datetime
+      VerifyDate:
+        description: 用户验证时间
+        type: string
+        format: datetime
+tags:
+- name: ad_list
+  description: |
+    AdListController operations for AdList
+- name: ad_log
+  description: |
+    AdLogController operations for AdLog
+- name: ad_users
+  description: |
+    AdUsersController operations for AdUsers
+- name: call_log
+  description: |
+    CallLogController operations for CallLog
+- name: qr_info
+  description: |
+    QrInfoController operations for QrInfo
+- name: user_info
+  description: |
+    UserInfoController operations for UserInfo
